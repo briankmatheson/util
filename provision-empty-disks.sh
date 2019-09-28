@@ -1,9 +1,20 @@
 #!/bin/sh
 
+usage() {
+		echo
+		echo $0 /path/to/drive [path2 ... pathN]
+}
+
 if [ "$USER" = "root" ]; then
 		echo finding and initializing empty drives
 else
 		echo must run as root
+		exit 1
+fi
+
+if [ $# -eq 0 ]; then
+		echo nothing to do
+		usage
 		exit 1
 fi
 
