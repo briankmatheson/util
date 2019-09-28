@@ -26,7 +26,7 @@ format_empty_drive() {
 add_drive_to_fstab() {
 		drive=$1
 		uuid=`blkid -s UUID -o value $drive`
-		echo UUID=`sudo blkid -s UUID -o value $drive` /mnt/disks/$drive ext4 defaults 0 2 | tee -a /etc/fstab
+		echo UUID=`sudo blkid -s UUID -o value $drive` /mnt/disks/$uuid ext4 defaults 0 2 | tee -a /etc/fstab
 }
 
 mount_drive() {
