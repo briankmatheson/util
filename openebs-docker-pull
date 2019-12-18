@@ -1,0 +1,37 @@
+#!/bin/sh -xe
+
+datestamp=$(date -I)
+tmp=./openebs-docker-images-$datestamp
+mkdir $tmp
+
+
+
+images="
+quay.io/openebs/linux-utils:1.5.0
+quay.io/openebs/m-apiserver:1.5.0
+quay.io/openebs/openebs-k8s-provisioner:1.5.0
+quay.io/openebs/snapshot-controller:1.5.0
+quay.io/openebs/snapshot-provisioner:1.5.0
+quay.io/openebs/admission-server:1.5.0
+quay.io/openebs/m-exporter:1.5.0
+quay.io/openebs/jiva:1.5.0
+quay.io/openebs/cstor-istgt:1.5.0
+quay.io/openebs/cstor-pool:1.5.0
+quay.io/openebs/cstor-pool-mgmt:1.5.0
+quay.io/openebs/cstor-volume-mgmt:1.5.0
+quay.io/openebs/node-disk-manager-amd64:v0.4.5
+quay.io/openebs/node-disk-operator-amd64:v0.4.5
+quay.io/openebs/provisioner-localpv:1.5.0
+"
+
+for image in $images; do
+		image_name_and_tag=$(basename $image)
+		
+		docker pull $image
+		docker tag $image $image_name_and_tag
+		docker image save -o $tmp/$image_name_and_tag $image_name_and_tag
+done
+tar czf $tmp.tgz $tmp
+rm -rf openebs-docker-images-$$
+
+
