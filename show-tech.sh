@@ -7,14 +7,20 @@ while read line; do
 		done <<EOF
 kubectl version
 kubectl get nodes
-kubectl get bd -A
+kubectl get bd -A -owide
+kubectl get sp
 kubectl get spc
 kubectl get csp
-kubectl get sp
+kubectl get ns
 kubectl get pvc -A
 kubectl get pv
-kubectl get all -n openebs		
-kubectl cluster-info dump -A
+kubectl get cvr -A
+kubectl get pods -n openebs -owide
+kubectl describe all -n openebs
+kubectl get pods -n maya-system -owide
+kubectl describe all -n maya-system
 EOF
+
+
 
 cat /tmp/maya-tech-support | gzip -c > ./maya-tech-support.gz
